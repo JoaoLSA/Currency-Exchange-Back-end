@@ -1,3 +1,4 @@
+using Domain.Entities;
 using Domain.Messages;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/currencyExchange/currency/home", () =>
+app.MapGet("/currencyExchange/currency/defaultExchange", () =>
 {
     return new GetHomeCurrenciesResponse
     {
@@ -35,5 +36,24 @@ app.MapGet("/currencyExchange/currency/home", () =>
 })
 .WithName("GetHomeCurrencies");
 
+app.MapGet("/currencyExchange/currency", () =>
+{
+    return new List<Currency>
+    {
+        new()
+        {
+            Id = 1,
+            Code = "BRL",
+            Name = "Brazilian real"
+        },
+        new()
+        {
+            Id = 2,
+            Code = "USD",
+            Name = "United States dollar"
+        }
+    };
+})
+.WithName("GetCurrencies");
 
 app.Run();
