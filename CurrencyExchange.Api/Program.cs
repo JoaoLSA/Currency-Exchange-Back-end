@@ -1,5 +1,8 @@
+using CurrencyExchange.Api.Middlewares;
+using CurrencyExchange.Domain.Messages;
+using CurrencyExchange.Infrastructure;
 using Domain.Entities;
-using Domain.Messages;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var assembly = AppDomain.CurrentDomain.Load("CurrencyExchange.Application");
+builder.Services.AddMediatR(assembly);
+
+builder.Services.RegisterInfrastructure();
+
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -17,22 +27,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/currencyExchange/currency/defaultExchange", () =>
+app.MapGet("/currencyExchange/currency/defaultExchange", (IMediator mediator) =>
 {
-    return new GetHomeCurrenciesResponse
-    {
-        FromCurrency = new()
-        {
-            Id = 1,
-            Value = 1
-        },
-        ToCurrency = new()
-        {
-            Id = 2,
-            Value = 1.02m
-        },
 
-    };
+    return mediator.Send(new GetHomeCurrenciesRequest());
 })
 .WithName("GetHomeCurrencies");
 

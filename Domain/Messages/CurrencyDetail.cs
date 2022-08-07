@@ -1,4 +1,4 @@
-﻿namespace Domain.Messages
+﻿namespace CurrencyExchange.Domain.Messages
 {
     public class CurrencyDetail
     {
