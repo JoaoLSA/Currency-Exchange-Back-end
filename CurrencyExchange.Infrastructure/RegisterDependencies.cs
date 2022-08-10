@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CurrencyExchange.Infrastructure.Database;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace CurrencyExchange.Infrastructure
         public static void RegisterInfrastructure(this IServiceCollection services)
         {
             services.AddTransient<ICurrencyRepository, CurrencyRepository>();
+            services.AddSingleton<ICurrencyScoopClient, CurrencyScoopClient>();
         }
     }
 }

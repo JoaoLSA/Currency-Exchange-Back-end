@@ -1,5 +1,5 @@
 ﻿using CurrencyExchange.Domain.Messages;
-using CurrencyExchange.Infrastructure;
+using CurrencyExchange.Infrastructure.Database;
 using MediatR;
 
 namespace CurrencyExchange.Application.Services
