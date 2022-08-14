@@ -6,9 +6,7 @@ namespace CurrencyExchange.Domain.Messages
     {
 
     }
-    public class GetHomeCurrenciesResponse
+    public class GetHomeCurrenciesResponse : BaseConversionResponse
     {
-        public CurrencyDetail? FromCurrency { get; set; }
-        public CurrencyDetail? ToCurrency { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using CurrencyExchange.Infrastructure;
+using FluentValidation.Results;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Diagnostics;
 using System.Net;
@@ -21,16 +23,23 @@ namespace CurrencyExchange.Api.Middlewares
             {
                 await _next(httpContext);
             }
+            catch (RequestValidationException ex)
+            {
+                _logger.LogError(ex, "An unhandled exception has occurred");
+                var result = BuildErrorResponse(ex.Message, HttpStatusCode.BadRequest, ex.Failures);
+                await HandleExceptionAsync(httpContext, result);
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An unhandled exception has occurred");
-                await HandleExceptionAsync(httpContext, "Internal Server Error", HttpStatusCode.InternalServerError);
+                var result = BuildErrorResponse(ex.Message, HttpStatusCode.InternalServerError);
+                await HandleExceptionAsync(httpContext, result);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, string message, HttpStatusCode statusCode)
+
+        private static Task HandleExceptionAsync(HttpContext context, ExceptionResponse result)
         {
-            var result = BuildErrorResponse(message, statusCode);
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = result.Status;
@@ -47,7 +56,7 @@ namespace CurrencyExchange.Api.Middlewares
                 Title = message,
                 TraceId = Activity.Current?.Id ?? "Unable to get TraceId",
                 Status = (int)statusCode,
-                Errors = new Dictionary<string, List<string>>
+                Errors = new Dictionary<string, IEnumerable<string>>
                 {
                     {
                         "ErrorDetails", new List<string>
@@ -57,6 +66,20 @@ namespace CurrencyExchange.Api.Middlewares
                     }
                 }
             };
+        private static ExceptionResponse BuildErrorResponse(string message, HttpStatusCode statusCode, List<ValidationFailure> failures)
+             => new()
+             {
+                 Type = "Exception",
+                 Title = message,
+                 TraceId = Activity.Current?.Id ?? "Unable to get TraceId",
+                 Status = (int)statusCode,
+                 Errors = new Dictionary<string, IEnumerable<string>>
+                {
+                    {
+                        "ErrorDetails", failures.Select(x => x.ErrorMessage)
+                    }
+                }
+             };
     }
 
     internal class ExceptionResponse
@@ -65,6 +88,6 @@ namespace CurrencyExchange.Api.Middlewares
         public string? Title { get; set; }
         public int Status { get; set; }
         public string? TraceId { get; set; }
-        public Dictionary<string, List<string>>? Errors { get; set; }
+        public Dictionary<string, IEnumerable<string>>? Errors { get; set; }
     }
 }
