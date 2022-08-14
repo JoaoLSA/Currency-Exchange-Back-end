@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyExchange.Api", "Cur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyExchange.Domain", "Domain\CurrencyExchange.Domain.csproj", "{D783D3D2-9005-4DFE-9B76-F5EB1E3824D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyExchange.Infrastructure", "CurrencyExchange.Infrastructure\CurrencyExchange.Infrastructure.csproj", "{1CD1241D-5EF7-412D-9A44-55C672381B17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyExchange.Infrastructure", "CurrencyExchange.Infrastructure\CurrencyExchange.Infrastructure.csproj", "{1CD1241D-5EF7-412D-9A44-55C672381B17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyExchange.Application", "CurrencyExchange.Application\CurrencyExchange.Application.csproj", "{984EA67B-8D7B-42BB-BE5E-3F12BBC1D831}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyExchange.Application", "CurrencyExchange.Application\CurrencyExchange.Application.csproj", "{984EA67B-8D7B-42BB-BE5E-3F12BBC1D831}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1324BE10-908C-461A-B6D6-55450B33E7EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{984EA67B-8D7B-42BB-BE5E-3F12BBC1D831}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{984EA67B-8D7B-42BB-BE5E-3F12BBC1D831}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{984EA67B-8D7B-42BB-BE5E-3F12BBC1D831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1324BE10-908C-461A-B6D6-55450B33E7EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1324BE10-908C-461A-B6D6-55450B33E7EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1324BE10-908C-461A-B6D6-55450B33E7EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1324BE10-908C-461A-B6D6-55450B33E7EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

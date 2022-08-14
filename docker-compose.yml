@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  currencyexchange.api:
+    image: ${DOCKER_REGISTRY-}currencyexchangeapi
+    build:
+      context: .
+      dockerfile: CurrencyExchange.Api/Dockerfile
